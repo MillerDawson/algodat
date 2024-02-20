@@ -1,31 +1,34 @@
 import sys, math
 
-def bst_sequence(linearray: list):
-    updated_string = ''
-    n = len(linearray)
-    MIDDLE = math.floor(n/2)
-    mid = linearray[MIDDLE] # calculates the middle node
-    print(mid) # DEBUG --- remove this
+# passes small tests, fails large scale tests
 
-    cur = MIDDLE - 2
-    while cur >= 0 and cur <= n:
-        print(linearray[cur]) # DEBUG --- change to creating new string
+def bst_sequence(linearray: list):
+    n = len(linearray) # length of linearray
+    bst_str = '' # this is the string that will be used in concatenation
+    MIDDLE = math.floor(n/2) # MIDDLE is used as a constant for balance calculations
+    bst_str += str(linearray[MIDDLE]) + ' ' # inserts the middle node
+
+    cur = MIDDLE - 2 # goes down the left
+    while cur >= 0: 
+        bst_str += str(linearray[cur]) + ' ' # adding to the bst_str
         cur -=2
-        
-    cur = 0
-    while cur >=0 and cur <MIDDLE:
-        print(linearray[cur]) # DEBUG --- change to creating new string
+    
+    cur = 0 # sets to element 0 of the list
+    while cur <MIDDLE: # goes backup while cur != middle
+        bst_str += str(linearray[cur]) + ' ' # adding to the bst_str
         cur+=2
         
-    cur = MIDDLE+2
+    cur = MIDDLE+2 # goes up 2's from middle
     while cur <n:
-        print(linearray[cur]) # DEBUG --- change to creating new string
+        bst_str += str(linearray[cur]) + ' ' # adding to the bst_str
         cur +=2
         
     cur = MIDDLE+1
-    while cur > MIDDLE and cur < n:
-        print(linearray[cur]) # DEBUG --- change to creating new string
+    while cur <=n:
+        bst_str += str(linearray[cur]) + ' ' # adding to the bst_str
         cur +=2
+        
+    return bst_str
         
 
 numlines=int(sys.stdin.readline())
@@ -34,7 +37,4 @@ for i in range(0,numlines):
         linearray=linearray[1:] # parses first character
         linearray.sort() # sorts the numbers
 
-        
-        print(linearray) # DEBUG ---
-        bst_sequence(linearray)
-        
+        print(bst_sequence(linearray)) # calls function to get the sequence then prints
