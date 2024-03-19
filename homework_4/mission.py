@@ -11,7 +11,7 @@ def is_connected(graph, curr, visited):
     if not visited[vertex]:
       is_connected(graph, vertex, visited)
 
-def can_drive(num_villages,roads):
+def can_drive(num_villages, roads):
   visited = [False] * num_villages # initialise visited
   graph = {i: set() for i in range(num_villages)} # initialise graph
   
@@ -21,12 +21,12 @@ def can_drive(num_villages,roads):
     graph[end_road].add(start_road)
   
   # check if all vertices have been visited
-  find_zero_vertiex = next((village for village, val in enumerate(graph.values()) if val), False)
+  no_vertex = next((village for village, val in enumerate(graph.values()) if val), None)
   
-  if find_zero_vertiex is False:
+  if no_vertex is None:
     return 1 # graph is a eulerian cycle
   
-  is_connected(graph, find_zero_vertiex, visited)
+  is_connected(graph, no_vertex, visited)
   
   # checks if graph is connected
   for i in range(num_villages):
@@ -34,8 +34,8 @@ def can_drive(num_villages,roads):
       return -1 
   
   # check if graph is eulerian cycle
-  for vertex in graph.values():
-    if len(vertex) &2 != 0: # ensures each vertex of graph has even number degrees
+  for i in graph.values():
+    if len(i) % 2 != 0: # ensures each vertex of graph has even number degrees
       return -1 
     
   return 1 # graph meets all requirements is traversible with eulerian cycle present
@@ -45,7 +45,7 @@ def can_drive(num_villages,roads):
 num_problems=int(sys.stdin.readline().strip())
 for _ in range(num_problems):
   line=sys.stdin.readline().strip()
-  num_villages,num_roads=list(map(int,line.split()))
+  num_villages,num_roads=map(int,line.split())
   roads=set()
   for _ in range(num_roads):
     roads.add(tuple(map(int,sys.stdin.readline().strip().split())))
